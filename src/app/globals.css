@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+
+/* We are using @theme which will convert everything to css root variable */
+/* :root {
+  --background: #fafafa;
+  --foreground: #1a1a1a;
+  --primary: #2563eb;
+  --gray-100: #f0f0f0;
+  --gray-200: #e0e0e0;
+  --gray-300: #c0c0c0;
+  --gray-400: #909090;
+  --gray-500: #606060;
+  --gray-600: #404040;
+  --gray-700: #2a2a2a;
+  --primary-800: #152d85;
+} */
+
+@theme {
+  --color-*: initial;
+  --color-background: #fafafa;
+  --color-foreground: #1a1a1a;
+  --color-primary: #2563eb;
+  --color-gray-100: #f0f0f0;
+  --color-gray-200: #e0e0e0;
+  --color-gray-300: #c0c0c0;
+  --color-gray-400: #909090;
+  --color-gray-500: #606060;
+  --color-gray-600: #404040;
+  --color-gray-700: #2a2a2a;
+  --color-primary-800: #152d85;
+
+  --text-* : initial;
+  --text-xs : 0.75rem;
+  --text-sm : 0.875rem;
+  --text-base : 1rem;
+  --text-lg : 1.125rem;
+  --text-xl : 1.25rem;
+  --text-2xl : 1.5rem;
+  --text-3xl : 1.75rem;
+  --text-4xl : 2rem;
+  --text-5xl : 2.5rem;
+  --text-6xl : 3rem;
+  --text-7xl : 4rem;
+  --text-8xl : 5rem;
+  --text-9xl : 6rem;
+
+  --leading-normal : 1.4;
+
+}
+
+@theme inline {
+  --font-heading : var(--font-satoshi);
+  --font-body : var(--font-dm-sans);
+}
