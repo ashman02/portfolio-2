@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 /* We are using @theme which will convert everything to css root variable */
 /* :root {
   --background: #fafafa;
@@ -30,26 +29,66 @@
   --color-gray-700: #2a2a2a;
   --color-primary-800: #152d85;
 
-  --text-* : initial;
-  --text-xs : 0.75rem;
-  --text-sm : 0.875rem;
-  --text-base : 1rem;
-  --text-lg : 1.125rem;
-  --text-xl : 1.25rem;
-  --text-2xl : 1.5rem;
-  --text-3xl : 1.75rem;
-  --text-4xl : 2rem;
-  --text-5xl : 2.5rem;
-  --text-6xl : 3rem;
-  --text-7xl : 4rem;
-  --text-8xl : 5rem;
-  --text-9xl : 6rem;
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.75rem;
+  --text-4xl: 2rem;
+  --text-5xl: 2.5rem;
+  --text-6xl: 3rem;
+  --text-7xl: 4rem;
+  --text-8xl: 5rem;
+  --text-9xl: 6rem;
 
-  --leading-normal : 1.4;
+  --leading-normal: 1.4;
+}
 
+/* we need these style always because of we are using these dynamically */
+@theme static {
+  --color-gray-100: #f0f0f0;
+  --color-gray-200: #e0e0e0;
+  --color-gray-300: #c0c0c0;
+  --color-gray-400: #909090;
+  --color-gray-500: #606060;
+  --color-gray-600: #404040;
+  --color-gray-700: #2a2a2a;
 }
 
 @theme inline {
-  --font-heading : var(--font-satoshi);
-  --font-body : var(--font-dm-sans);
+  --font-heading: var(--font-satoshi);
+  --font-body: var(--font-dm-sans);
+}
+
+/* Custom classes for ease of use */
+
+.my-container {
+  @apply px-2 py-12 md:px-4 md:py-16 lg:px-16 lg:py-24;
+}
+
+.hero-heading {
+  @apply font-heading text-5xl font-bold leading-none tracking-tighter md:text-7xl lg:text-9xl;
+}
+
+.btn-heading {
+  @apply font-heading text-base font-bold leading-none md:text-xl lg:text-2xl;
+}
+
+.section-heading {
+  @apply font-heading text-3xl font-bold leading-none tracking-tighter md:text-6xl lg:text-7xl;
+}
+
+.card-heading {
+  @apply font-heading text-2xl font-bold leading-none tracking-tighter md:text-4xl lg:text-5xl;
+}
+
+.input-heading {
+  @apply font-heading text-xl font-bold leading-none tracking-tighter md:text-2xl lg:text-4xl;
+}
+
+.para-text {
+  @apply font-body text-base font-medium leading-normal md:text-xl lg:text-2xl;
 }
