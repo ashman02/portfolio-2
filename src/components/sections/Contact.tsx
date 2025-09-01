@@ -4,7 +4,7 @@ import Button from "../Button";
 
 const Contact = () => {
   return (
-    <section className="my-container flex flex-col gap-10 md:gap-12 lg:gap-16">
+    <section className="my-grid flex flex-col gap-10 md:gap-12 lg:gap-16 bg-background rounded-b-lg">
       <div className="contact-header flex w-full flex-col gap-3 md:w-5/6 md:gap-4 lg:w-3/5 lg:gap-6">
         <h1 className="section-heading">Your Dream Website is One Form Away</h1>
         <p className="para-text text-gray-600">

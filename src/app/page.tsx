@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
@@ -12,6 +13,7 @@ export default function Home() {
       <Work/>
       <About/>
       <Contact/>
+      <Footer/>
     </main>
   );
 }
