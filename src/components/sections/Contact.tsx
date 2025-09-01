@@ -13,7 +13,7 @@ const Contact = () => {
         </p>
       </div>
       <div className="input-form flex flex-col gap-6 lg:gap-8">
-        <div className="flex flex-col gap-6 md:flex-row md:gap-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           <div className="w-full">
             <Input
               label="Email"
