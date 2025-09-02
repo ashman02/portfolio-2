@@ -30,7 +30,7 @@ const Hero = () => {
     });
   }, []);
   return (
-    <section
+    <div
       id="#hero"
       className="my-container flex h-screen min-h-[600px] flex-col justify-between"
     >
@@ -48,7 +48,7 @@ const Hero = () => {
       <Link className="hero-heading-word opacity-0" href={"#contact"}>
         <Button name="Get Your Dream Website Today" />
       </Link>
-    </section>
+    </div>
   );
 };
 
