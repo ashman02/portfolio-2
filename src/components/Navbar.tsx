@@ -1,15 +1,31 @@
 "use client";
 import React, { useState } from "react";
-import Button from "./Button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useHash } from "@/hooks/useHash";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  const hash = useHash();
+  const navItems = [
+    {
+      name: "Work",
+      link: "#work",
+      isActive: hash === "#work",
+    },
+    {
+      name: "About",
+      link: "#about",
+      isActive: hash === "#about",
+    },
+    {
+      name: "Contact",
+      link: "#contact",
+      isActive: hash === "#contact",
+    },
+  ];
   const [isActive, setIsActive] = useState(false);
   return (
     <header className="fixed top-0 z-50 w-full">
-      <nav className="relative z-30 flex items-center justify-between px-2 py-3 md:px-4 md:py-1 lg:px-16">
+      <nav className="relative z-30 flex items-center justify-between px-2 py-3 md:px-4 md:py-5 lg:px-16 lg:py-6">
         <h1
           className="btn-heading"
           style={{
@@ -22,33 +38,19 @@ const Navbar = () => {
         </h1>
         {/* Show nav items on medium and large screens */}
         <ul className="hidden items-center gap-6 md:flex">
-          <li
-            className="btn-heading"
-            style={{
-              color:
-                pathname === "#work"
+          {navItems.map((item) => (
+            <li
+              key={item.name}
+              className="btn-heading"
+              style={{
+                color: item.isActive
                   ? "var(--color-foreground)"
                   : "var(--color-gray-500)",
-            }}
-          >
-            <Link href={"#work"}>Work</Link>
-          </li>
-          <li
-            className="btn-heading"
-            style={{
-              color:
-                pathname === "#about"
-                  ? "var(--color-foreground)"
-                  : "var(--color-gray-500)",
-            }}
-          >
-            <Link href={"#about"}>About</Link>
-          </li>
-          <li>
-            <Link href={"#contact"}>
-              <Button name="Book Now" />
-            </Link>
-          </li>
+              }}
+            >
+              <Link href={item.link}>{item.name}</Link>
+            </li>
+          ))}
         </ul>
         {/* Show hamburger on smaller screens */}
         <div className="flex h-full w-6 cursor-pointer flex-col gap-1 py-1 md:hidden">
@@ -66,43 +68,24 @@ const Navbar = () => {
         </div>
       </nav>
       {/* Navbar menu for mobile */}
-      <div className="bg-foreground absolute top-0 z-20 flex h-screen w-full flex-col justify-between px-2 pb-6 pt-24 md:hidden"
-      style={{transform : isActive ? "translateX(0)" : "translateX(-100%)"}}
+      <div
+        className="bg-foreground absolute top-0 z-20 flex h-screen w-full flex-col justify-between px-2 pb-6 pt-24 md:hidden"
+        style={{ transform: isActive ? "translateX(0)" : "translateX(-100%)" }}
       >
         <ul className="flex flex-col gap-1">
-          <li
-            className="menuItem-heading"
-            style={{
-              color:
-                pathname === "#work"
+          {navItems.map((item) => (
+            <li
+              key={item.name}
+              className="menuItem-heading"
+              style={{
+                color: item.isActive
                   ? "var(--color-gray-500)"
                   : "var(--color-background)",
-            }}
-          >
-            <Link href={"#work"}>Work</Link>
-          </li>
-          <li
-            className="menuItem-heading"
-            style={{
-              color:
-                pathname === "#about"
-                  ? "var(--color-gray-500)"
-                  : "var(--color-background)",
-            }}
-          >
-            <Link href={"#about"}>About</Link>
-          </li>
-          <li
-            className="menuItem-heading"
-            style={{
-              color:
-                pathname === "#contact"
-                  ? "var(--color-gray-500)"
-                  : "var(--color-background)",
-            }}
-          >
-            <Link href={"#contact"}>Contact</Link>
-          </li>
+              }}
+            >
+              <Link href={item.link}>{item.name}</Link>
+            </li>
+          ))}
         </ul>
         <div className="flex items-center gap-4">
           <div>

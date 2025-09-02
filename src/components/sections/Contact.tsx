@@ -1,10 +1,30 @@
-import React from "react";
+"use client";
+import React, { useRef, useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
 
 const Contact = () => {
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const challengeInputRef = useRef<HTMLInputElement>(null);
+  const goalInputRef = useRef<HTMLInputElement>(null);
+  const [response, setResponse] = useState("");
+  const handleFormSubmit = () => {
+    if (
+      !emailInputRef.current?.value ||
+      !challengeInputRef.current?.value ||
+      !goalInputRef.current?.value
+    ) {
+      setResponse("Please fill out all fields");
+      return;
+    }
+    console.log(
+      emailInputRef.current.value,
+      challengeInputRef.current.value,
+      goalInputRef.current.value,
+    );
+  };
   return (
-    <section className="my-grid flex flex-col gap-10 md:gap-12 lg:gap-16 bg-background rounded-b-lg">
+    <section id="contact" className="my-grid bg-background relative z-10 flex flex-col gap-10 rounded-b-lg md:gap-12 lg:gap-16">
       <div className="contact-header flex w-full flex-col gap-3 md:w-5/6 md:gap-4 lg:w-3/5 lg:gap-6">
         <h1 className="section-heading">Your Dream Website is One Form Away</h1>
         <p className="para-text text-gray-600">
@@ -19,12 +39,14 @@ const Contact = () => {
               label="Email"
               placeholder="Your best email address"
               type="email"
+              ref={emailInputRef}
             />
           </div>
           <div className="w-full">
             <Input
               label="Tell me about your project?"
               placeholder="What's your vision? Current challenges?"
+              ref={challengeInputRef}
             />
           </div>
         </div>
@@ -32,11 +54,16 @@ const Contact = () => {
           <Input
             label="What would success look like?"
             placeholder="Dream outcomes?"
+            ref={goalInputRef}
           />
         </div>
         <div>
-          <Button name="Let’s Build Something Amazing" />
+          <Button
+            name="Let’s Build Something Amazing"
+            onClick={handleFormSubmit}
+          />
         </div>
+        <p className="para-text min-h-12">{response}</p>
       </div>
     </section>
   );

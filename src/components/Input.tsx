@@ -1,14 +1,13 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label : string
     type? : string
     placeholder : string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key : string] : any
+    ref : React.Ref<HTMLInputElement>
 }
 
-const Input = ({label, type="text", placeholder, ...props} : InputProps) => {
+const Input = ({label, type="text", placeholder, ref, ...props} : InputProps) => {
   return (
 
     <div className="flex w-full flex-col gap-2 lg:gap-3">
@@ -18,6 +17,7 @@ const Input = ({label, type="text", placeholder, ...props} : InputProps) => {
       <input
         type={type}
         placeholder={placeholder}
+        ref={ref}
         {...props}
         className="btn-heading h-full w-full rounded-sm bg-gray-200 px-1 py-3 placeholder:text-gray-400 outline-none md:rounded-lg md:px-2 md:py-4 lg:py-5"
       />

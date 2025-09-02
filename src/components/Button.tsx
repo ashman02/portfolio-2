@@ -1,18 +1,15 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   name: string;
   onBtnClick?: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
 }
 
-const Button = ({ name, onBtnClick, props }: ButtonProps) => {
+const Button = ({ name, ...props }: ButtonProps) => {
   return (
     <button
-      onClick={onBtnClick}
       {...props}
-      className="btn-heading bg-primary text-background rounded-lg px-5 py-3 md:px-7 md:py-4 lg:px-10 lg:py-5"
+      className="btn-heading bg-primary text-background rounded-lg px-5 py-3 md:px-7 md:py-4 lg:px-10 lg:py-5 cursor-pointer"
     >
       {name}
     </button>
