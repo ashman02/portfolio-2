@@ -1,10 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { useHash } from "@/hooks/useHash";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const Navbar = () => {
   const hash = useHash();
+  const mainNavRef = useRef<HTMLDivElement>(null);
+
+  //simple animation nav items fading in 
+  useGSAP(() => {
+    gsap.to(".nav-item", {
+      opacity: 1,
+      duration: 1,
+      ease: "sine.inOut",
+      stagger : 0.05
+    });
+  }, []);
+
+
   const navItems = [
     {
       name: "Work",
@@ -25,9 +42,12 @@ const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   return (
     <header className="fixed top-0 z-50 w-full">
-      <nav className="relative z-30 flex items-center justify-between px-2 py-3 md:px-4 md:py-5 lg:px-16 lg:py-6">
+      <nav
+        ref={mainNavRef}
+        className="relative z-30 flex items-center justify-between px-2 py-3 md:px-4 md:py-5 lg:px-16 lg:py-6"
+      >
         <h1
-          className="btn-heading"
+          className="btn-heading nav-item opacity-0"
           style={{
             color: isActive
               ? "var(--color-background)"
@@ -41,7 +61,7 @@ const Navbar = () => {
           {navItems.map((item) => (
             <li
               key={item.name}
-              className="btn-heading"
+              className="btn-heading nav-item opacity-0"
               style={{
                 color: item.isActive
                   ? "var(--color-foreground)"
