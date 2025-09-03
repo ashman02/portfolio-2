@@ -6,7 +6,7 @@ import Button from "../Button";
 
 const Work = () => {
   return (
-    <div id="work" className="flex h-full w-full flex-col gap-10 py-12 md:gap-12 md:py-16 lg:gap-16 lg:py-24">
+    <section id="work" className="flex h-full w-full flex-col gap-10 py-12 md:gap-12 md:py-16 lg:gap-16 lg:py-24">
       <div className="work-header flex w-full flex-col gap-3 px-2 md:w-5/6 md:gap-4 md:px-4 lg:w-3/5 lg:gap-6 lg:px-16">
         <h1 className="section-heading">Fresh Talent, Proven Skills</h1>
         <p className="para-text text-gray-600">
@@ -29,7 +29,7 @@ const Work = () => {
       <Link className="px-2 md:px-4 lg:px-16" href={"#contact"}>
         <Button name="Be My Next Success Story" />
       </Link>
-    </div>
+    </section>
   );
 };
 

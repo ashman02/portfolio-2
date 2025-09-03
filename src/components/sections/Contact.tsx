@@ -24,7 +24,7 @@ const Contact = () => {
     );
   };
   return (
-    <div id="contact" className="my-grid bg-background relative z-10 flex flex-col gap-10 rounded-b-lg md:gap-12 lg:gap-16">
+    <section id="contact" className="my-grid bg-background relative z-10 flex flex-col gap-10 rounded-b-lg md:gap-12 lg:gap-16">
       <div className="contact-header flex w-full flex-col gap-3 md:w-5/6 md:gap-4 lg:w-3/5 lg:gap-6">
         <h1 className="section-heading">Your Dream Website is One Form Away</h1>
         <p className="para-text text-gray-600">
@@ -65,7 +65,7 @@ const Contact = () => {
         </div>
         <p className="para-text min-h-12">{response}</p>
       </div>
-    </div>
+    </section>
   );
 };
 

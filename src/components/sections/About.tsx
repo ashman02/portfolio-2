@@ -4,7 +4,7 @@ import myImage from "@/../public/images/about-img-no-bg.png";
 
 const About = () => {
   return (
-    <div id="about" className="my-grid relative flex h-screen min-h-[500px] flex-col items-center justify-center">
+    <section id="about" className="my-grid relative flex h-screen min-h-[500px] flex-col items-center justify-center">
       <div className="flex w-full flex-col items-center justify-center gap-6 md:w-10/12 md:gap-7 lg:w-8/12 lg:gap-12">
         <h1 className="para-text">Hey, I&apos;m Ashman</h1>
         <p className="card-heading text-center">
@@ -23,7 +23,7 @@ const About = () => {
         />
       </div>
       <div className="overlay bg-background/90 absolute -z-20 h-72 w-52 md:w-56" />
-    </div>
+    </section>
   );
 };
 
