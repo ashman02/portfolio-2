@@ -1,5 +1,4 @@
-import About from "@/components/sections/About";
-import Contact from "@/components/sections/Contact";
+import ContactReveal from "@/components/animations/ContactReveal";
 import Hero from "@/components/sections/Hero";
 import Work from "@/components/sections/Work";
 
@@ -8,8 +7,7 @@ export default function Home() {
     <main>
       <Hero/>
       <Work/>
-      <About/>
-      <Contact/>
+      <ContactReveal/>
     </main>
   );
 }
