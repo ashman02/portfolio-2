@@ -23,7 +23,7 @@ const socialsData = [
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground -mt-2 flex flex-col items-center justify-center gap-4 px-2 pb-4 pt-6 md:flex-row md:justify-between md:px-4 md:pb-12 md:pt-14 lg:px-16">
+    <footer className="bg-foreground -mt-[154px] flex flex-col items-center justify-center gap-4 px-2 pb-4 pt-6 md:-mt-[164px] md:flex-row md:justify-between md:px-4 md:pb-12 md:pt-14 lg:-mt-[176px] lg:px-16 relative">
       <div className="flex flex-col items-center gap-1 md:items-start">
         <h3 className="para-text text-gray-400">Email</h3>
         <p className="para-text text-background">
