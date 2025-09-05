@@ -29,7 +29,7 @@ const Work = () => {
       stagger: 0.05,
       scrollTrigger: {
         trigger: ".work-main-heading",
-        start: "top center",
+        start: "top 70%",
       },
     });
   }, []);

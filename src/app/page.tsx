@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero";
@@ -17,26 +18,16 @@ export default function Home() {
   const workSectionRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add(
-      {
-        isDesktop: "(min-width: 1024px)",
-        isTablet: "(min-width: 768px) and (max-width: 1023px)",
-        isMobile: "(max-width: 767px)",
-      },
-      (context) => {
-        const { isDesktop, isTablet } = context.conditions as {
-          isDesktop: boolean;
-          isTablet: boolean;
-        };
-        if (mainTl.current) mainTl.current.kill();
+    if (mainTl.current) mainTl.current.kill();
         if (
           !mainContainerRef.current ||
           !sectionsContainerRef.current ||
           !workSectionRef.current ||
           !aboutSectionRef.current ||
-          !contactSectionRef.current
+          !contactSectionRef.current ||
+          !footerRef.current
         )
           return;
 
@@ -69,15 +60,25 @@ export default function Home() {
           .to(aboutSectionRef.current, {
             y: -contactSectionRef.current.clientHeight,
           })
-          .to(sectionsContainerRef.current, {
-            y: isDesktop ? -168 : isTablet ? -156 : -146,
-          });
-      },
-    );
+          .to(aboutSectionRef.current, {
+            y:
+              -footerRef.current.clientHeight +
+              8 -
+              contactSectionRef.current.clientHeight,
+          })
+          .to(
+            contactSectionRef.current,
+            {
+              y: -footerRef.current.clientHeight + 8,
+              borderBottomLeftRadius: 8,
+              borderBottomRightRadius: 8,
+            },
+            "<",
+          );
   }, []);
   return (
     <main ref={mainContainerRef} className="relative">
-      <div className="absolute top-0 -z-10 w-full">
+      <div className="bg-background absolute top-0 z-10 w-full">
         <Hero />
       </div>
       <div
@@ -95,9 +96,12 @@ export default function Home() {
         </div>
         <div
           ref={contactSectionRef}
-          className="bg-background absolute bottom-0 z-20 w-full rounded-b-lg"
+          className="bg-background absolute bottom-0 z-20 w-full"
         >
           <Contact />
+        </div>
+        <div ref={footerRef} className="absolute bottom-0 z-10 w-full">
+          <Footer />
         </div>
       </div>
     </main>
