@@ -14,7 +14,7 @@ const WorkCard = ({ id, img, title, link }: WorkCardProps) => {
     <Link className="h-full w-full cursor-pointer" href={link} target="_blank">
       <div
         className="relative flex h-full w-80 items-center justify-center rounded-3xl md:w-[584px]"
-        style={{ backgroundColor: `var(--color-gray-${id * 100 + 100})` }}
+        style={{ backgroundColor: `var(--color-gray-${id})` }}
       >
         <div className="h-full w-full">
           <Image
@@ -27,7 +27,7 @@ const WorkCard = ({ id, img, title, link }: WorkCardProps) => {
           className="card-heading absolute bottom-5 left-4 md:bottom-6 md:left-5 lg:bottom-8 lg:left-6"
           style={{
             color:
-              id < 4 ? "var(--color-foreground)" : "var(--color-background)",
+              id <= 300 ? "var(--color-foreground)" : "var(--color-background)",
           }}
         >
           {title}

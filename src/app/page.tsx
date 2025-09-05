@@ -19,90 +19,121 @@ export default function Home() {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
+  const heroOverlayRef = useRef<HTMLDivElement>(null);
+  const contactOverlayRef = useRef<HTMLDivElement>(null);
   useGSAP(() => {
     if (mainTl.current) mainTl.current.kill();
-        if (
-          !mainContainerRef.current ||
-          !sectionsContainerRef.current ||
-          !workSectionRef.current ||
-          !aboutSectionRef.current ||
-          !contactSectionRef.current ||
-          !footerRef.current
-        )
-          return;
+    if (
+      !mainContainerRef.current ||
+      !sectionsContainerRef.current ||
+      !workSectionRef.current ||
+      !aboutSectionRef.current ||
+      !contactSectionRef.current ||
+      !footerRef.current ||
+      !contactOverlayRef.current ||
+      !heroOverlayRef.current
+    )
+      return;
 
-        const scrollHeight =
-          window.innerHeight +
-          workSectionRef.current.scrollWidth +
-          contactSectionRef.current.clientHeight +
-          170;
+    const scrollHeight =
+      window.innerHeight +
+      workSectionRef.current.scrollWidth +
+      contactSectionRef.current.clientHeight +
+      170;
 
-        mainTl.current = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: mainContainerRef.current,
-            start: "top top",
-            end: "+=" + scrollHeight,
-            scrub: true,
-            pin: true,
-            invalidateOnRefresh: true,
-            markers: true,
-          },
-        });
+    mainTl.current = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: mainContainerRef.current,
+        start: "top top",
+        end: "+=" + scrollHeight,
+        scrub: true,
+        pin: true,
+        invalidateOnRefresh: true,
+      },
+    });
 
-        mainTl.current
-          .to(sectionsContainerRef.current, {
-            y: 0,
-          })
-          .to(workSectionRef.current, {
-            x: -workSectionRef.current.scrollWidth,
-          })
-          .to(aboutSectionRef.current, {
-            y: -contactSectionRef.current.clientHeight,
-          })
-          .to(aboutSectionRef.current, {
-            y:
-              -footerRef.current.clientHeight +
-              8 -
-              contactSectionRef.current.clientHeight,
-          })
-          .to(
-            contactSectionRef.current,
-            {
-              y: -footerRef.current.clientHeight + 8,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-            },
-            "<",
-          );
+    mainTl.current
+      .to(sectionsContainerRef.current, {
+        y: 0,
+      })
+      .to(
+        heroOverlayRef.current,
+        {
+          opacity: 1,
+        },
+        "<",
+      )
+      .to(workSectionRef.current, {
+        x: -workSectionRef.current.scrollWidth,
+      })
+      .to(aboutSectionRef.current, {
+        y: -contactSectionRef.current.clientHeight,
+      })
+      .to(
+        contactOverlayRef.current,
+        {
+          opacity: 0,
+        },
+        "<",
+      )
+      .to(aboutSectionRef.current, {
+        y:
+          -footerRef.current.clientHeight +
+          8 -
+          contactSectionRef.current.clientHeight,
+      })
+      .to(
+        contactSectionRef.current,
+        {
+          y: -footerRef.current.clientHeight + 8,
+          borderBottomLeftRadius: 8,
+          borderBottomRightRadius: 8,
+        },
+        "<",
+      );
   }, []);
   return (
     <main ref={mainContainerRef} className="relative">
-      <div className="bg-background absolute top-0 z-10 w-full">
+      <section id="hero" className="bg-background absolute top-0 z-10 w-full">
         <Hero />
-      </div>
+        <div
+          ref={heroOverlayRef}
+          className="bg-foreground absolute top-0 h-full w-full opacity-0"
+        />
+      </section>
       <div
         ref={sectionsContainerRef}
         className="relative z-50 translate-y-[100vh] overflow-x-hidden"
       >
-        <div ref={workSectionRef} className="bg-background relative z-40">
+        <section
+          id="work"
+          ref={workSectionRef}
+          className="bg-foreground text-background relative z-40 w-fit"
+        >
           <Work />
-        </div>
-        <div
+        </section>
+        <section
+          id="about"
           ref={aboutSectionRef}
-          className="bg-background absolute top-0 z-30"
+          className="text-background absolute top-0 z-30 bg-gray-700"
         >
           <About />
-        </div>
-        <div
+        </section>
+        <section
+          id="contact"
           ref={contactSectionRef}
           className="bg-background absolute bottom-0 z-20 w-full"
         >
           <Contact />
-        </div>
-        <div ref={footerRef} className="absolute bottom-0 z-10 w-full">
+          <div
+            ref={contactOverlayRef}
+            className="bg-foreground absolute top-0 h-full w-full"
+          />
+        </section>
+        <footer ref={footerRef} className="absolute bottom-0 z-10 w-full">
           <Footer />
-        </div>
+        </footer>
       </div>
     </main>
   );

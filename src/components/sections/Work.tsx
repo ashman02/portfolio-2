@@ -34,16 +34,15 @@ const Work = () => {
     });
   }, []);
   return (
-    <section
-      id="work"
-      className="bg-background relative z-50 flex flex-nowrap h-screen w-fit items-center gap-4 pb-3 px-2 pt-10 md:gap-5 md:pb-5 md:px-4 md:pt-[60px] lg:gap-6 lg:pb-6 lg:px-16 lg:pt-[72px]"
+    <div
+      className="relative z-50 flex flex-nowrap h-screen w-fit items-center gap-4 pb-3 px-2 pt-10 md:gap-5 md:pb-5 md:px-4 md:pt-[60px] lg:gap-6 lg:pb-6 lg:px-16 lg:pt-[72px]"
     >
       <div className="work-header w-2/5">
         <h1 className="work-main-heading section-heading w-full">
           Fresh Talent, Proven Skills
         </h1>
       </div>
-      <div className="horizontal-scroll-container bg-background h-full w-fit">
+      <div className="horizontal-scroll-container h-full w-fit">
         <div className="project-container flex h-full gap-4 md:gap-5 lg:gap-6">
           {worksData.map((work) => (
             <WorkCard
@@ -56,7 +55,7 @@ const Work = () => {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

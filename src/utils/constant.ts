@@ -5,25 +5,25 @@ import appleCloneMockup from "@/../public/images/apple-mockup-no-bg.png"
 
 const worksData = [
     {
-        id : 1,
+        id : 600,
         title : "Thrive Fitness",
         img : thriveMockup,
         link : "https://www.thrive-fitness.com/"
     },
     {
-        id : 2,
+        id : 500,
         title : "Trisha Aesthetics",
         img : trishaAestheticMockup,
         link : "https://trisha-aesthetics.vercel.app/"
     },
     {
-        id : 3,
+        id : 400,
         title : "Lars Langen",
         img : larsLangenMockup,
         link : "https://lars-langen.vercel.app/"
     },
     {
-        id : 4,
+        id : 200,
         title : "Apple Clone",
         img : appleCloneMockup,
         link : "https://lars-langen.vercel.app/"
