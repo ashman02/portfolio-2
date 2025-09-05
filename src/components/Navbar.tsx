@@ -1,45 +1,50 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useHash } from "@/hooks/useHash";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useTimeline } from "@/context/TimelineContext";
 
 gsap.registerPlugin(useGSAP);
 
 const Navbar = () => {
-  const hash = useHash();
+  const { activeHash, gotoHash } = useTimeline();
+  const [isActive, setIsActive] = useState(false);
+  const [hash, setHash] = useState(activeHash);
+
   const mainNavRef = useRef<HTMLDivElement>(null);
 
-  //simple animation nav items fading in 
+  useEffect(() => {
+    setHash(activeHash);
+  }, [activeHash])
+
+  //simple animation nav items fading in
   useGSAP(() => {
     gsap.to(".nav-item", {
       opacity: 1,
       duration: 1,
       ease: "sine.inOut",
-      stagger : 0.05
+      stagger: 0.05,
     });
   }, []);
-
 
   const navItems = [
     {
       name: "Work",
       link: "#work",
-      isActive: hash === "#work",
+      isActive: hash === "work",
     },
     {
       name: "About",
       link: "#about",
-      isActive: hash === "#about",
+      isActive: hash === "about",
     },
     {
       name: "Contact",
       link: "#contact",
-      isActive: hash === "#contact",
+      isActive: hash === "contact",
     },
   ];
-  const [isActive, setIsActive] = useState(false);
   return (
     <header className="fixed top-0 z-50 w-full">
       <nav
@@ -54,7 +59,7 @@ const Navbar = () => {
               : "var(--color-foreground)",
           }}
         >
-          <Link href={"#hero"}>Ashman Sidhu</Link>
+          <Link onClick={() => gotoHash("hero")} href={"#hero"}>Ashman Sidhu</Link>
         </h1>
         {/* Show nav items on medium and large screens */}
         <ul className="hidden items-center gap-6 md:flex">
@@ -68,7 +73,7 @@ const Navbar = () => {
                   : "var(--color-gray-500)",
               }}
             >
-              <Link href={item.link}>{item.name}</Link>
+              <Link onClick={() => gotoHash(item.name.toLowerCase())} href={item.link}>{item.name}</Link>
             </li>
           ))}
         </ul>

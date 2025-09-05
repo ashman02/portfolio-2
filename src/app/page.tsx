@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero";
 import Work from "@/components/sections/Work";
+import { useTimeline } from "@/context/TimelineContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,7 +13,6 @@ import { useRef } from "react";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function Home() {
-  const mainTl = useRef<GSAPTimeline>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const sectionsContainerRef = useRef<HTMLDivElement>(null);
   const workSectionRef = useRef<HTMLDivElement>(null);
@@ -21,8 +21,8 @@ export default function Home() {
   const footerRef = useRef<HTMLDivElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
   const contactOverlayRef = useRef<HTMLDivElement>(null);
+  const { setActiveHash, setTimeline } = useTimeline();
   useGSAP(() => {
-    if (mainTl.current) mainTl.current.kill();
     if (
       !mainContainerRef.current ||
       !sectionsContainerRef.current ||
@@ -39,9 +39,9 @@ export default function Home() {
       window.innerHeight +
       workSectionRef.current.scrollWidth +
       contactSectionRef.current.clientHeight +
-      170;
+      footerRef.current.clientHeight;
 
-    mainTl.current = gsap.timeline({
+    const tl = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
         trigger: mainContainerRef.current,
@@ -53,9 +53,11 @@ export default function Home() {
       },
     });
 
-    mainTl.current
+    tl.addLabel("hero")
       .to(sectionsContainerRef.current, {
         y: 0,
+        onComplete: () => setActiveHash("work"),
+        onReverseComplete: () => setActiveHash("hero"),
       })
       .to(
         heroOverlayRef.current,
@@ -64,11 +66,17 @@ export default function Home() {
         },
         "<",
       )
+      .addLabel("work")
       .to(workSectionRef.current, {
         x: -workSectionRef.current.scrollWidth,
+        onComplete: () => setActiveHash("about"),
+        onReverseComplete: () => setActiveHash("work"),
       })
+      .addLabel("about")
       .to(aboutSectionRef.current, {
         y: -contactSectionRef.current.clientHeight,
+        onComplete: () => setActiveHash("contact"),
+        onReverseComplete: () => setActiveHash("about"),
       })
       .to(
         contactOverlayRef.current,
@@ -77,6 +85,7 @@ export default function Home() {
         },
         "<",
       )
+      .addLabel("contact")
       .to(aboutSectionRef.current, {
         y:
           -footerRef.current.clientHeight +
@@ -92,6 +101,8 @@ export default function Home() {
         },
         "<",
       );
+
+    setTimeline(tl);
   }, []);
   return (
     <main ref={mainContainerRef} className="relative">
