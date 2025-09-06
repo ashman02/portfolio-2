@@ -1,7 +1,7 @@
-import thriveMockup from "@/../public/images/thrive-fitness-no-bg.png";
-import trishaAestheticMockup from "@/../public/images/trisha-mockup-nobg.png"
-import larsLangenMockup from "@/../public/images/lars-langen-mockup.png"
-import appleCloneMockup from "@/../public/images/apple-mockup-no-bg.png"
+import thriveMockup from "@/../public/images/thrive-fitness-no-bg_final.png";
+import trishaAestheticMockup from "@/../public/images/trisha-mockup-nobg_final.png"
+import larsLangenMockup from "@/../public/images/lars-langen-mockup_final.png"
+import appleCloneMockup from "@/../public/images/apple-mockup-no-bg_final.png"
 
 const worksData = [
     {
