@@ -6,6 +6,7 @@ import React, {
   useState,
   ReactNode,
   use,
+  useEffect,
 } from "react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -50,6 +51,16 @@ export function TimelineProvider({ children }: { children: ReactNode }) {
     tlRef.current = tl;
   };
 
+  // if there is already a hash in the URL, use it. 
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash && activeHash !== hash) {
+      setActiveHash(hash);
+      gotoHash(hash);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Map a label -> scroll position (window Y) using timeline duration
   const labelToScroll = (label: string) => {
     const tl = tlRef.current;
@@ -62,11 +73,12 @@ export function TimelineProvider({ children }: { children: ReactNode }) {
     return getScrollPosition(tl, progress);
   };
 
-  const gotoHash = (hash: string) => {
+  const gotoHash = (hash: string, opts?: { duration?: number }) => {
     const label = hash; // labels should match hashes: "hero","work","about","contact","footer"
     const y = labelToScroll(label);
     if (y == null) return;
-    gsap.to(window, { scrollTo: y, duration : 1, ease: "sine.inOut" });
+    const d = opts ? opts.duration : 1.2
+    gsap.to(window, { scrollTo: y, duration: d, ease: "sine.inOut" });
     history.replaceState(null, "", `#${hash}`);
   };
 

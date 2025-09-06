@@ -110,7 +110,7 @@ export default function Home() {
         <Hero />
         <div
           ref={heroOverlayRef}
-          className="bg-foreground absolute top-0 h-full w-full opacity-0"
+          className="bg-foreground absolute top-0 h-full w-full opacity-0 pointer-events-none"
         />
       </section>
       <div
@@ -139,7 +139,7 @@ export default function Home() {
           <Contact />
           <div
             ref={contactOverlayRef}
-            className="bg-foreground absolute top-0 h-full w-full"
+            className="bg-foreground absolute top-0 h-full w-full pointer-events-none"
           />
         </section>
         <footer ref={footerRef} className="absolute bottom-0 z-10 w-full">

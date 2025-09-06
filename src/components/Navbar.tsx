@@ -11,15 +11,16 @@ const Navbar = () => {
   const { activeHash, gotoHash } = useTimeline();
   const [isActive, setIsActive] = useState(false);
   const [hash, setHash] = useState(activeHash);
-
+  const mainNavbarTl = useRef<GSAPTimeline>(null);
   const mainNavRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setHash(activeHash);
-  }, [activeHash])
+  }, [activeHash]);
 
   //simple animation nav items fading in
-  useGSAP(() => {
+  const { contextSafe } = useGSAP(() => {
     gsap.to(".nav-item", {
       opacity: 1,
       duration: 1,
@@ -45,21 +46,103 @@ const Navbar = () => {
       isActive: hash === "contact",
     },
   ];
+
+  // function to handle opening of navbar in mobile section
+  const handleActivateMobileMenu = contextSafe(() => {
+    if (!mobileMenuRef.current) return;
+    if (mainNavbarTl.current) mainNavbarTl.current.kill();
+    setIsActive(true);
+
+    mainNavbarTl.current = gsap.timeline({
+      defaults: { duration: 0.4, ease: "sine.inOut" },
+    });
+
+    mainNavbarTl.current
+      .to(".bar.top", {
+        rotate: 45,
+        y: 6,
+        transformOrigin: "center center",
+      })
+      .to(".bar.middle", { scaleX: 0, opacity: 0 }, "<")
+      .to(
+        ".bar.bottom",
+        {
+          rotate: -45,
+          y: -6,
+          transformOrigin: "center center",
+        },
+        "<",
+      )
+      .to(
+        mobileMenuRef.current,
+        {
+          scaleY: 1,
+        },
+        "<",
+      )
+      .to(".mobile-menu-item", {
+        opacity: 1,
+        x: 0,
+        stagger: 0.05,
+      });
+  });
+
+  // function to close menubar in mobile
+  const handleCloseMobileMenu = contextSafe(() => {
+    if (!mobileMenuRef.current) return;
+    if (mainNavbarTl.current) mainNavbarTl.current.kill();
+    setIsActive(false);
+
+    mainNavbarTl.current = gsap.timeline({
+      defaults: { duration: 0.2, ease: "sine.inOut" },
+    });
+
+    mainNavbarTl.current
+      .to(".bar.top", {
+        rotate: 0,
+        y: 0,
+      })
+      .to(".bar.middle", { scaleX: 1, opacity: 1 }, "<")
+      .to(
+        ".bar.bottom",
+        {
+          rotate: 0,
+          y: 0,
+        },
+        "<",
+      )
+      .to(
+        ".mobile-menu-item",
+        {
+          opacity: 0,
+          x: -40,
+          stagger: 0.02,
+        },
+        "<",
+      )
+      .to(mobileMenuRef.current, {
+        scaleY: 0,
+      });
+  });
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <nav
         ref={mainNavRef}
         className="relative z-30 flex items-center justify-between px-2 py-3 md:px-4 md:py-5 lg:px-16 lg:py-6"
       >
-        <h1
-          className="btn-heading nav-item opacity-0"
-          style={{
-            color: isActive
-              ? "var(--color-background)"
-              : "var(--color-foreground)",
-          }}
-        >
-          <Link onClick={() => gotoHash("hero")} href={"#hero"}>Ashman Sidhu</Link>
+        <h1 className="btn-heading nav-item text-gray-500 opacity-0">
+          <Link
+            onClick={() => {
+              gotoHash("hero");
+              if (isActive) {
+                handleCloseMobileMenu();
+              }
+            }}
+            href={"#hero"}
+          >
+            Ashman Sidhu
+          </Link>
         </h1>
         {/* Show nav items on medium and large screens */}
         <ul className="hidden items-center gap-6 md:flex">
@@ -69,50 +152,87 @@ const Navbar = () => {
               className="btn-heading nav-item opacity-0"
               style={{
                 color: item.isActive
-                  ? "var(--color-foreground)"
+                  ? "var(--color-gray-400)"
                   : "var(--color-gray-500)",
               }}
             >
-              <Link onClick={() => gotoHash(item.name.toLowerCase())} href={item.link}>{item.name}</Link>
+              <Link
+                onClick={() => gotoHash(item.name.toLowerCase())}
+                href={item.link}
+              >
+                {item.name}
+              </Link>
             </li>
           ))}
         </ul>
         {/* Show hamburger on smaller screens */}
-        <div className="flex h-full w-6 cursor-pointer flex-col gap-1 py-1 md:hidden">
-          {[1, 2, 3].map((i) => (
-            <div
-              style={{
-                backgroundColor: isActive
-                  ? "var(--color-background)"
-                  : "var(--color-foreground)",
-              }}
-              key={i}
-              className="h-px w-full rounded-md"
+        <div
+          className="nav-item flex w-6 cursor-pointer flex-col items-center justify-center gap-1 opacity-0 md:hidden"
+          onClick={() => {
+            if (isActive) {
+              handleCloseMobileMenu();
+            } else {
+              handleActivateMobileMenu();
+            }
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <rect
+              className="bar top fill-gray-500"
+              width="24"
+              height="2"
+              x="2"
+              y="6"
+              rx="2"
             />
-          ))}
+            <rect
+              className="bar middle fill-gray-500"
+              width="24"
+              height="2"
+              x="2"
+              y="12"
+              rx="2"
+            />
+            <rect
+              className="bar bottom fill-gray-500"
+              width="24"
+              height="2"
+              x="2"
+              y="18"
+              rx="2"
+            />
+          </svg>
         </div>
       </nav>
       {/* Navbar menu for mobile */}
       <div
-        className="bg-foreground absolute top-0 z-20 flex h-screen w-full flex-col justify-between px-2 pb-6 pt-24 md:hidden"
-        style={{ transform: isActive ? "translateX(0)" : "translateX(-100%)" }}
+        className="bg-foreground absolute top-0 z-20 flex h-screen w-full origin-top scale-y-0 flex-col justify-between px-2 pb-6 pt-24 md:hidden"
+        ref={mobileMenuRef}
       >
         <ul className="flex flex-col gap-1">
           {navItems.map((item) => (
             <li
               key={item.name}
-              className="menuItem-heading"
+              className="menuItem-heading mobile-menu-item -translate-x-10 opacity-0"
               style={{
                 color: item.isActive
                   ? "var(--color-gray-500)"
                   : "var(--color-background)",
               }}
             >
-              <Link href={item.link}>{item.name}</Link>
+              <Link
+                onClick={() => {
+                  handleCloseMobileMenu();
+                  gotoHash(item.name.toLowerCase());
+                }}
+                href={item.link}
+              >
+                {item.name}
+              </Link>
             </li>
           ))}
         </ul>
-        <div className="flex items-center gap-4">
+        <div className="mobile-menu-item flex items-center gap-4 opacity-0">
           <div>
             <svg
               height="24px"

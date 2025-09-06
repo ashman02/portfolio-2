@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Button from "../Button";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useTimeline } from "@/context/TimelineContext";
 
 gsap.registerPlugin(useGSAP);
 
@@ -20,6 +21,7 @@ const headerArray = [
 
 const Hero = () => {
   const heroHeadingRef = useRef<HTMLHeadingElement>(null);
+  const { gotoHash, setActiveHash } = useTimeline();
   //fading in animation
   useGSAP(() => {
     gsap.to(".hero-heading-word", {
@@ -30,9 +32,7 @@ const Hero = () => {
     });
   }, []);
   return (
-    <div
-      className="my-container flex h-screen min-h-[600px] flex-col justify-between"
-    >
+    <div className="my-container flex h-screen min-h-[600px] flex-col justify-between">
       <h1
         ref={heroHeadingRef}
         className="hero-heading flex flex-wrap gap-x-2 md:gap-x-3 lg:gap-x-4"
@@ -44,7 +44,14 @@ const Hero = () => {
           </span>
         ))}
       </h1>
-      <Link className="hero-heading-word opacity-0" href={"#contact"}>
+      <Link
+        className="hero-heading-word cursor-pointer opacity-0"
+        href={"#contact"}
+        onClick={() => {
+          gotoHash("contact", { duration: 2 });
+          setActiveHash("contact");
+        }}
+      >
         <Button name="Get Your Dream Website Today" />
       </Link>
     </div>
