@@ -1,7 +1,7 @@
 import thriveMockup from "@/../public/images/thrive-fitness-no-bg_final.png";
 import trishaAestheticMockup from "@/../public/images/trisha-mockup-nobg_final.png"
 import larsLangenMockup from "@/../public/images/lars-langen-mockup_final.png"
-import appleCloneMockup from "@/../public/images/apple-mockup-no-bg_final.png"
+import tattooArtistMockup from "@/../public/images/tattoo-artist-final.png"
 
 const worksData = [
     {
@@ -24,9 +24,9 @@ const worksData = [
     },
     {
         id : 200,
-        title : "Apple Clone",
-        img : appleCloneMockup,
-        link : "https://lars-langen.vercel.app/"
+        title : "Tattoo Artist",
+        img : tattooArtistMockup,
+        link : "https://ashman-tattoo.netlify.app/"
     }
 ]
 
