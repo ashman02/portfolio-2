@@ -21,6 +21,7 @@ const WorkCard = ({ id, img, title, link }: WorkCardProps) => {
             src={img}
             alt={title}
             className="h-full w-full object-cover object-center"
+            priority
           />
         </div>
         <h1

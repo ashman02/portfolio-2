@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { TimelineProvider } from "@/context/TimelineContext";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const satoshi = localFont({
   src: "../../public/fonts/Satoshi-Variable.woff2",
@@ -86,6 +87,7 @@ export default function RootLayout({
       <body
         className={`${satoshi.variable} ${dmSans.variable} bg-background text-foreground antialiased`}
       >
+        <GoogleAnalytics gaId="G-VFV5GEDSQ7" />
         <TimelineProvider>
           <Navbar />
           {children}
