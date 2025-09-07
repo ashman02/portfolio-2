@@ -7,8 +7,11 @@ const Contact = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const challengeInputRef = useRef<HTMLInputElement>(null);
   const goalInputRef = useRef<HTMLInputElement>(null);
+  const [isSending, setIsSending] = useState(false);
   const [response, setResponse] = useState("");
-  const handleFormSubmit = () => {
+
+  //handle form submit function
+  const handleFormSubmit = async () => {
     if (
       !emailInputRef.current?.value ||
       !challengeInputRef.current?.value ||
@@ -17,16 +20,29 @@ const Contact = () => {
       setResponse("Please fill out all fields");
       return;
     }
-    console.log(
-      emailInputRef.current.value,
-      challengeInputRef.current.value,
-      goalInputRef.current.value,
-    );
+    const email = emailInputRef.current.value;
+    const challenge = challengeInputRef.current.value;
+    const goal = goalInputRef.current.value;
+    setIsSending(true);
+    const response = await fetch("/api/send-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, challenge, goal }),
+    });
+    const res = await response.json();
+    console.log(res)
+    if (res.success) {
+      setResponse(res.message);
+      emailInputRef.current.value = "";
+      challengeInputRef.current.value = "";
+      goalInputRef.current.value = "";
+    } else {
+      setResponse(res.message);
+    }
+    setIsSending(false);
   };
   return (
-    <div
-      className="my-grid bg-background flex flex-col gap-10 rounded-b-lg md:gap-12 lg:gap-16"
-    >
+    <div className="my-grid bg-background flex flex-col gap-10 rounded-b-lg md:gap-12 lg:gap-16">
       <div className="contact-header flex w-full flex-col gap-3 md:w-5/6 md:gap-4 lg:w-3/5 lg:gap-6">
         <h1 className="section-heading hidden">
           Your Dream Website is One Form Away
@@ -65,6 +81,7 @@ const Contact = () => {
           <Button
             name="Let’s Build Something Amazing"
             onClick={handleFormSubmit}
+            disabled={isSending}
           />
         </div>
         <p className="para-text">{response}</p>
