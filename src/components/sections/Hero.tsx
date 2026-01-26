@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { Suspense, useRef } from "react";
 import Button from "../Button";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useTimeline } from "@/context/TimelineContext";
+import { Canvas } from "@react-three/fiber";
+import Experience from "../Experience";
 
 gsap.registerPlugin(useGSAP);
 
@@ -54,6 +56,13 @@ const Hero = () => {
       >
         <Button name="Get Your Dream Website Today" />
       </Link>
+      <div className="canvas-container absolute left-0 top-0 -z-10 h-full w-full opacity-60">
+        <Canvas>
+          <Suspense>
+            <Experience />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
   );
 };
