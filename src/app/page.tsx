@@ -1,35 +1,39 @@
 "use client";
-import Footer from "@/components/Footer";
-import About from "@/components/sections/About";
-import Contact from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero";
-import Testimonial from "@/components/sections/Testimonial";
-import Work from "@/components/sections/Work";
-import { useTimeline } from "@/context/TimelineContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
+import Work from "@/components/sections/Work";
+import { useTimeline } from "@/context/TimelineContext";
+import About from "@/components/sections/About";
+import Testimonial from "@/components/sections/Testimonial";
+import Contact from "@/components/sections/Contact";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function Home() {
   const mainContainerRef = useRef<HTMLDivElement>(null);
-  const sectionsContainerRef = useRef<HTMLDivElement>(null);
+  const heroOverlayRef = useRef<HTMLDivElement>(null);
+  const workSectionContainerRef = useRef<HTMLDivElement>(null);
   const workSectionRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const testimonialContactFooterSectionContainerRef =
+    useRef<HTMLDivElement>(null);
   const testimonialSectionRef = useRef<HTMLDivElement>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
-  const heroOverlayRef = useRef<HTMLDivElement>(null);
   const contactOverlayRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+
   const { setActiveHash, setTimeline } = useTimeline();
+
+  //   animation
   useGSAP(() => {
     if (
       !mainContainerRef.current ||
-      !sectionsContainerRef.current ||
       !workSectionRef.current ||
-      !aboutSectionRef.current ||
+      !testimonialContactFooterSectionContainerRef.current ||
       !testimonialSectionRef.current ||
       !contactSectionRef.current ||
       !footerRef.current ||
@@ -42,11 +46,11 @@ export default function Home() {
     const scrollHeight =
       workSectionRef.current.clientHeight +
       workSectionRef.current.scrollWidth +
-      aboutSectionRef.current.clientHeight +
+      testimonialSectionRef.current.clientHeight +
       contactSectionRef.current.clientHeight +
       footerRef.current.clientHeight;
 
-    // default timeline to scroll all sections
+    // so here is our timeline to animatate content in sequence
     const tl = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
@@ -59,9 +63,10 @@ export default function Home() {
       },
     });
 
-    // scroll all sections container
+    // we are using labels to track current active section.
+    // move our work section to the top
     tl.addLabel("hero")
-      .to(sectionsContainerRef.current, {
+      .to(workSectionContainerRef.current, {
         y: 0,
         onComplete: () => setActiveHash("work"),
         onReverseComplete: () => setActiveHash("hero"),
@@ -81,13 +86,14 @@ export default function Home() {
         onReverseComplete: () => setActiveHash("work"),
       })
       .addLabel("about")
-      // Move about section to the top to reveal contact section
-      .to(aboutSectionRef.current, {
-        y: -testimonialSectionRef.current.clientHeight,
+    //   testimonial section to the top
+      .to(testimonialContactFooterSectionContainerRef.current, {
+        y: 0,
         onComplete: () => setActiveHash("testimonial"),
         onReverseComplete: () => setActiveHash("about"),
       })
       .addLabel("testimonial")
+    //   now for contact we are moving testimonial section just equal to the height of contact section. (same for footer)
       .to(testimonialSectionRef.current, {
         y: -contactSectionRef.current.clientHeight,
         onComplete: () => setActiveHash("contact"),
@@ -117,12 +123,12 @@ export default function Home() {
         },
         "<",
       );
-
     setTimeline(tl);
   }, []);
+
   return (
     <main ref={mainContainerRef} className="relative">
-      {/* Hero section is always visible because it's absolute and does not take up space */}
+      {/* Our goal is to create a stacking animation so we have positioned the hero section absolutely */}
       <section id="hero" className="bg-background absolute top-0 z-10 w-full">
         <Hero />
         <div
@@ -130,48 +136,55 @@ export default function Home() {
           className="bg-foreground pointer-events-none absolute top-0 h-full w-full opacity-0"
         />
       </section>
-      {/* All other sections are placed inside another div and we are moving this below initially so we can see our hero section than with the help of gsap we are moving this in */}
+      {/* we have overflow on x so we are wrapping this in div and later with gsap we will move section to the left */}
+      {/* we are moving this below the fold so we can see hero and with animation we can move it to the top */}
       <div
-        ref={sectionsContainerRef}
-        className="relative z-50 translate-y-[100vh] overflow-x-hidden"
+        ref={workSectionContainerRef}
+        className="relative z-20 translate-y-[100vh] overflow-hidden"
       >
         <section
           id="work"
           ref={workSectionRef}
-          className="bg-foreground text-background relative z-40 w-fit"
+          className="bg-foreground text-background relative z-30 w-fit"
         >
           <Work />
         </section>
-        {/* From here all the sections are absolute and stacked under each other */}
-        {/* About section is hidden under work section so is contact, testimonial and footer. */}
+        {/* we are grouping other sections with work section because we want other sections to remain under work section and as we are moving work section to the left about section is starting to visible again. so other sections as well */}
         <section
           id="about"
           ref={aboutSectionRef}
-          className="text-background absolute top-0 z-30 bg-gray-700"
+          className="text-background absolute top-0 z-20 bg-gray-700"
         >
           <About />
         </section>
-        <section
-          id="testimonial"
-          ref={testimonialSectionRef}
-          className="absolute top-0 z-[25]"
+        {/* we have grouped testimonial, contact and footer because we want stacking animation contact section comes under testimonial section and footer under contact section. */}
+        <div
+          ref={testimonialContactFooterSectionContainerRef}
+          className="absolute top-0 z-[25] translate-y-[100vh]"
         >
-          <Testimonial />
-        </section>
-        <section
-          id="contact"
-          ref={contactSectionRef}
-          className="bg-background absolute bottom-0 z-20 w-full"
-        >
-          <Contact />
-          <div
-            ref={contactOverlayRef}
-            className="bg-foreground pointer-events-none absolute top-0 h-full w-full"
-          />
-        </section>
-        <footer ref={footerRef} className="absolute bottom-0 z-10 w-full">
-          <Footer />
-        </footer>
+          <section
+            id="testimonial"
+            ref={testimonialSectionRef}
+            className="relative z-30"
+          >
+            <Testimonial />
+          </section>
+
+          <section
+            id="contact"
+            ref={contactSectionRef}
+            className="bg-background absolute bottom-0 z-20 w-full"
+          >
+            <Contact />
+            <div
+              ref={contactOverlayRef}
+              className="bg-foreground pointer-events-none absolute top-0 h-full w-full"
+            />
+          </section>
+          <footer ref={footerRef} className="absolute bottom-0 z-10 w-full">
+            <Footer />
+          </footer>
+        </div>
       </div>
     </main>
   );
