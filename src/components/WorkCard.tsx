@@ -16,11 +16,11 @@ const WorkCard = ({ id, img, title, link }: WorkCardProps) => {
         className="relative flex h-full w-80 items-center justify-center rounded-3xl md:w-[584px]"
         style={{ backgroundColor: `var(--color-gray-${id})` }}
       >
-        <div className="h-full w-full">
+        <div className="w-full h-[30%] md:h-1/2 lg:h-[70%]">
           <Image
             src={img}
             alt={title}
-            className="h-full w-full object-cover object-center"
+            className="w-full h-full object-contain"
             priority
           />
         </div>

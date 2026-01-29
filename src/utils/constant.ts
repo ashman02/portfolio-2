@@ -1,14 +1,14 @@
-import thriveMockup from "@/../public/images/thrive-fitness-no-bg_final.png";
-import trishaAestheticMockup from "@/../public/images/trisha-mockup-nobg_final.png"
-import larsLangenMockup from "@/../public/images/lars-langen-mockup_final.png"
-import tattooArtistMockup from "@/../public/images/tattoo-artist-final.png"
+import thriveMockup from "@/../public/images/thrive-fitness-mockup.png";
+import trishaAestheticMockup from "@/../public/images/trisha-mockup.png"
+import touchMeUpMockup from "@/../public/images/touch-me-up-mockup.png"
+import tattooArtistMockup from "@/../public/images/tattoo-artist-mockup.png"
 
 const worksData = [
     {
         id : 600,
-        title : "Thrive Fitness",
-        img : thriveMockup,
-        link : "https://www.thrive-fitness.com/"
+        title : "Touch Me Up",
+        img : touchMeUpMockup,
+        link : "https://touchmeupmedicalspa.framer.website/"
     },
     {
         id : 500,
@@ -18,12 +18,12 @@ const worksData = [
     },
     {
         id : 400,
-        title : "Lars Langen",
-        img : larsLangenMockup,
-        link : "https://lars-langen.vercel.app/"
+        title : "Thrive Fitness",
+        img : thriveMockup,
+        link : "https://www.thrive-fitness.com/"
     },
     {
-        id : 200,
+        id : 300,
         title : "Tattoo Artist",
         img : tattooArtistMockup,
         link : "https://ashman-tattoo.netlify.app/"
