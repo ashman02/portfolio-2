@@ -86,14 +86,14 @@ export default function Home() {
         onReverseComplete: () => setActiveHash("work"),
       })
       .addLabel("about")
-    //   testimonial section to the top
+      //   testimonial section to the top
       .to(testimonialContactFooterSectionContainerRef.current, {
         y: 0,
         onComplete: () => setActiveHash("testimonial"),
         onReverseComplete: () => setActiveHash("about"),
       })
       .addLabel("testimonial")
-    //   now for contact we are moving testimonial section just equal to the height of contact section. (same for footer)
+      //   now for contact we are moving testimonial section just equal to the height of contact section. (same for footer)
       .to(testimonialSectionRef.current, {
         y: -contactSectionRef.current.clientHeight,
         onComplete: () => setActiveHash("contact"),
@@ -153,19 +153,19 @@ export default function Home() {
         <section
           id="about"
           ref={aboutSectionRef}
-          className="text-background absolute top-0 z-20 bg-gray-700"
+          className="text-background absolute top-0 z-20 w-full bg-gray-700"
         >
           <About />
         </section>
         {/* we have grouped testimonial, contact and footer because we want stacking animation contact section comes under testimonial section and footer under contact section. */}
         <div
           ref={testimonialContactFooterSectionContainerRef}
-          className="absolute top-0 z-[25] translate-y-[100vh]"
+          className="absolute top-0 z-[25] translate-y-[100vh] w-full"
         >
           <section
             id="testimonial"
             ref={testimonialSectionRef}
-            className="relative z-30"
+            className="bg-primary relative z-30 w-full"
           >
             <Testimonial />
           </section>

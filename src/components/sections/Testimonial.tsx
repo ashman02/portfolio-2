@@ -2,8 +2,8 @@ import React from "react";
 
 const Testimonial = () => {
   return (
-    <div className="my-grid relative flex h-screen min-h-[500px] flex-col items-center justify-center bg-primary lg:gap-16 md:gap-12 gap-10">
-      <p className="card-heading w-full text-center md:w-10/12 lg:w-8/12 text-gray-700">
+    <div className="my-grid relative flex h-screen min-h-[500px] flex-col items-center justify-center lg:gap-16 md:gap-12 gap-10">
+      <p className="card-heading w-full text-center md:w-10/12 lg:w-[800px] text-gray-700">
         Working with Ashman on my website has been a great experience. His
         strong technical knowledge and problem solving skills have been
         invaluable.{" "}

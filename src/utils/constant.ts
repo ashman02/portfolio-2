@@ -1,7 +1,7 @@
-import thriveMockup from "@/../public/images/thrive-fitness-mockup.png";
+import thriveMockup from "@/../public/images/thrive-fitness-mockup_resized.png";
 import trishaAestheticMockup from "@/../public/images/trisha-mockup.png"
-import touchMeUpMockup from "@/../public/images/touch-me-up-mockup.png"
-import tattooArtistMockup from "@/../public/images/tattoo-artist-mockup.png"
+import touchMeUpMockup from "@/../public/images/touch-me-up-mockup_resized.png"
+import tattooArtistMockup from "@/../public/images/tattoo-artist-mockup_resized.png"
 
 const worksData = [
     {

@@ -7,7 +7,7 @@ const About = () => {
     <div
       className="my-grid relative flex h-screen min-h-[500px] flex-col items-center justify-center"
     >
-      <div className="flex w-full flex-col items-center justify-center gap-6 md:w-10/12 md:gap-7 lg:w-8/12 lg:gap-12">
+      <div className="flex w-full flex-col items-center justify-center gap-6 md:w-10/12 md:gap-7 lg:w-[800px] lg:gap-12">
         <h1 className="para-text">Hey, I&apos;m Ashman</h1>
         <p className="card-heading text-center">
           Look, I could bore you with technical specs and fancy buzzwords. But
